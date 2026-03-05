@@ -15,7 +15,7 @@
 
 ### Тестирование
 
-![1](Screenshots/1st-task.png)
+![1](screenshots/1st-task.png)
 
 # Задание 2
 
