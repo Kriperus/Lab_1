@@ -1,4 +1,73 @@
-﻿open System
+open System
+open Microsoft.FSharp.Core
+
+let addToList element list = element :: list  // Добавление элемента в лист
+
+let rec delFromList element list =  // Удаление элемента из списка
+    if List.isEmpty list then
+        []
+    else if list.Head = element then
+        list.Tail
+    else
+        list.Head :: delFromList element list.Tail
+
+let rec findInList element list =   // Поиск значения в списке
+    match list with
+    | [] -> 
+        printfn "Элемент не найден"
+    | head :: tail ->
+        if head = element then 
+            printfn "Элемент \"%s\" найден" element
+        else
+            findInList element tail
+
+let combineLists list1 list2 = list1 @ list2    // Сцепка списков
+
+let elemFromList index list =
+    if index < 0 || index >= List.length list then
+        printfn "Индекс %d не корректен" index
+    else
+        let elem = List.item index list
+        printfn "Элемент по индексу %d: \"%s\"" index elem
+
+let rec createList () = // Создание списка
+    let element = Console.ReadLine()
+    if element = "" then
+        []
+    else
+        element :: createList()
+
+[<EntryPoint>]
+let main args =
+
+    printfn "Введите элементы вашего списка: "
+    let list = createList()
+    printfn "Введеный список: %A" list
+
+    printf "Введите добавляемый элемент: "
+    let AddedElem = Console.ReadLine()
+    let AddingElem = addToList AddedElem list
+    printfn "Обновленный список: %A" AddingElem
+
+    printf "Введите значение удаляемого элемента: "
+    let RemovedElem = Console.ReadLine()
+    let RemovingElem = delFromList RemovedElem AddingElem
+    printfn "Обновленный список: %A" RemovingElem
+
+    printf "Введите искомый элемент: "
+    let find = Console.ReadLine()
+    findInList find RemovingElem
+
+    printfn "Введите сцепляемый список: "
+    let ListToComb = createList()
+    let combinedList = combineLists RemovingElem ListToComb
+    printfn "Обновленный список: %A" combinedList
+
+    printf "Введите индекс искомого элемента: "
+    let index = Console.ReadLine() |> int
+    elemFromList index combinedList
+
+    0﻿open System
 open Microsoft.FSharp.Core
 
 let addToList element list = element :: list  // Добавление элемента в лист
@@ -68,3 +137,4 @@ let main args =
     elemFromList index combinedList
 
     0
+
